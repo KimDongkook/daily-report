@@ -1,41 +1,104 @@
 <template>
   <div class="hello">
+    <h1>`Hello world {{ msg }}`</h1>
+    <new :msg="msg">
+
+    </new>
+    <h2>{{ author }}</h2>
+    <h3>age : {{ age + 10 }}</h3>
+    <p v-html="article"></p>
+    <p v-if="seen">보인다</p>
+    <p v-else>보이지 않음</p>
+    <p v-show="seen">show</p>
+    <p v-show="!seen">NOT show</p>
+    <a :href="url">google</a>
+
+    <p :class="{active: isActive}">active</p>
+    <p :style="{color:textColor}">스타일 바인드</p>
+    <ul>
+      <li v-for="item in items" :key="item.name">
+        {{ item.name }} - {{ item.age }}
+      </li>
+    </ul>
+    <ul>
+      <li v-for="(value,keyyyy,index) in person" :key="index">
+        {{ value }}
+      </li>
+    </ul>
+
+    <button @click.once="updateScore(2)">클릭하세요</button>
+    <input type="text" @keyup.enter="keyup()">
+    <h1>score:{{ score }}</h1>
+
+    <h2>오늘 : {{ today }}</h2>
+
     <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+    <input type="text" placeholder="입력하세요" v-model="msg">
+    <input type="checkbox" v-model="seen">
+    <p>{{ seen }}</p>
+
+    <input type="radio" v-model="age" value="30">
+    <input type="radio" v-model="age" value="20">
+    <input type="radio" v-model="age" value="10">
+    <p>{{ age }}</p>
+
+    <select v-model="age">
+      <option value="30">30</option>
+      <option value="20">20</option>
+      <option value="10">10</option>
+    </select>
   </div>
 </template>
 
 <script>
+import New from './New';
 export default {
   name: 'HelloWorld',
-  props: {
-    msg: String
-  }
+  components:{
+    New
+  },
+  data(){
+    return{
+      score:0,
+      msg:"반갑습니다!",
+      author:"김동국",
+      age:20,
+      article: `<strong>Hello</strong> world!`,
+      seen:true,
+      url:"http://www.google.com",
+      isActive: false,
+      textColor: 'red',
+      items:[
+        {name:'red', age:15}
+        ,{name:'blue',age:25}
+        ,{name:'green',age:30}
+      ],
+      person:{
+        name:'bob',
+        age: 25,
+        location: 'seoul'
+      }
+
+    }
+  },
+  methods:{
+    updateScore(score){
+      console.log(score);
+      this.score = score;
+    },
+    keyup(){
+      console.log('keyup');
+    }
+  },
+  computed:{
+    today(){
+      let date = new Date();
+      return date.getDate();
+    }
+  },
+  // props: {
+  //   msg: String
+  // }
 }
 </script>
 
